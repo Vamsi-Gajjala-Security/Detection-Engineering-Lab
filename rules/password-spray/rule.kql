@@ -1,0 +1,12 @@
+SigninLogs
+| where ResultType == 50126 // Result code for failed username or password
+| summarize FailedAttempts = count() by UserPrincipalName, ClientAppUsed, IPAddress, bin(TimeGenerated, 1h)
+| where FailedAttempts > 10 // Adjust threshold as needed
+| join kind=leftouter (
+    SigninLogs
+    | where ResultType == 0 // Successful login
+    | project SuccessTime = TimeGenerated, UserPrincipalName, SuccessIPAddress = IPAddress
+) on UserPrincipalName
+| where isnotempty(SuccessTime) and IPAddress != SuccessIPAddress
+| project UserPrincipalName, FailedAttempts, IPAddress, SuccessTime, SuccessIPAddress, ClientAppUsed
+| sort by FailedAttempts desc
