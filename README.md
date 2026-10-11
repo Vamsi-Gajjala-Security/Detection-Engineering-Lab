@@ -2,7 +2,7 @@
 
 A practical Detection Engineering repository focused on Microsoft Sentinel analytics rules, KQL detections, and MITRE ATT&CK mappings.
 
-All detections are developed, tested, and documented in a lab environment using simulated data. No client, employer, or production data is included.
+Detections are developed in a lab environment using simulated data. A detection is marked Tested only after it has been validated and its tuning documented. No client, employer, or production data is included.
 **Detection Rules**
 Rule	MITRE ATT&CK	Data Source	Status
 Password Spray	T1110.003	SigninLogs	Planned
